@@ -1,13 +1,19 @@
 package controllers
 
-import javax.inject.Inject
-import javax.inject.Singleton
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents, Request}
+import play.api.libs.json.{JsValue, Json}
 
-@Singleton
-class HelloController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
-  def get(name:Option[String]): Action[AnyContent] =
-    Action {implicit request: Request[AnyContent] =>
-      Ok(name.getOrElse("please give me your name"))
-    }
+import javax.inject.Inject
+import play.api.mvc._
+
+class HelloController @Inject() (cc: ControllerComponents)
+  extends AbstractController(cc) {
+
+  def hello():Action[AnyContent] = Action(Ok("Hello World"))
+
+
+  def helloJson(): Action[AnyContent] = Action {
+    val json: JsValue = Json.obj("hello" -> "world", "language" -> "scala")
+
+    Ok(json)
+  }
 }

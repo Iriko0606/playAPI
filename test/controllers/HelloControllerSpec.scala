@@ -1,28 +1,37 @@
 package controllers
 
-import akka.stream.Materializer
-import org.mockito.Mockito.when
 import org.scalatestplus.play._
-import org.specs2.mock.Mockito
-import org.scalatest._
-import org.scalatestplus.mockito.MockitoSugar
-import org.scalatestplus.play._
-import play.api.mvc.{Action, AnyContent, DefaultActionBuilder, EssentialAction, Result, Results}
-import play.api.test.Helpers.{contentAsString, defaultAwaitTimeout}
-import play.api.test.{FakeRequest, Helpers}
-import play.mvc.Action
+import org.scalatestplus.play.guice._
+import play.api.libs.json.Json
+import play.api.test.Helpers._
+import play.api.test._
 
-import scala.concurrent.Future
+class HelloControllerSpec extends PlaySpec with GuiceOneAppPerTest {
 
+  "HelloController GET" must {
 
-class HelloControllerSpec extends PlaySpec with Mockito {
+    "「/hello」にGETメソッドでアクセスすると「Hello World」が返る" in {
+      val request  = FakeRequest(GET, "/hello")
+      val response = route(app, request).get
 
-  "HelloServiceGet" should {
-    "ok get when string is given" in {
-      val controller             = new HelloController(Helpers.stubControllerComponents())
-      val result: Future[Result] = controller.get(Option("namae")).apply(FakeRequest())
-      val bodyText: String       = contentAsString(result)
-      bodyText mustBe "namae"
+      status(response) mustBe OK
+      contentType(response) mustBe Some("text/plain")
+      contentAsString(response) mustBe "Hello World"
+    }
+  }
+
+  "HelloController POST" must {
+
+    "「/hello」にPOSTメソッドでアクセスするとJsonが返る" in {
+      val request  = FakeRequest(POST, "/hello")
+      val response = route(app, request).get
+
+      status(response) mustBe OK
+      contentType(response) mustBe Some("application/json")
+      contentAsJson(response) mustBe Json.obj(
+        "hello"    -> "world",
+        "language" -> "scala"
+      )
     }
   }
 }
