@@ -17,8 +17,8 @@ import scala.concurrent.Future
 
 class HelloControllerSpec extends PlaySpec with Mockito {
 
-  "UserService#isAdmin" should {
-    "be true when the role is admin" in {
+  "HelloServiceGet" should {
+    "ok get when string is given" in {
       val controller             = new HelloController(Helpers.stubControllerComponents())
       val result: Future[Result] = controller.get(Option("namae")).apply(FakeRequest())
       val bodyText: String       = contentAsString(result)
