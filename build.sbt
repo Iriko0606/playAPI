@@ -5,6 +5,10 @@ val scalaTestPlusPlayVersion = "5.0.0"
 
 libraryDependencies ++= Seq(
   guice,
+  evolutions,
+  jdbc,
+  specs2 % Test,
+  "mysql" % "mysql-connector-java" % "8.0.27",
   "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % "test",
-  specs2 % Test //PlayFrameworkの場合
+  "com.h2database" % "h2" % "1.4.197"
 )
