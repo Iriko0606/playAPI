@@ -1,2 +1,3 @@
+GET    / controllers.HomeController.index(name: Option[String], value: Option[String])
 GET    /hello    controllers.HelloController.hello
 POST   /hello    controllers.HelloController.helloJson
